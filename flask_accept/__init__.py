@@ -1,0 +1,67 @@
+import functools
+
+from flask import request
+from werkzeug.exceptions import NotAcceptable
+
+
+class Acceptor(object):
+    mimetypes = []
+    use_fallback = False
+
+    def __init__(self, func):
+        """Initialize a new Acceptor and create the accept handlers
+
+        :param func: the endpoint function to fall back upon
+        """
+        self.fallback = func
+        self.accept_handlers = {
+            mimetype: func for mimetype in self.__class__.mimetypes
+        }
+        functools.update_wrapper(self, func)
+
+    def __call__(self, *args, **kwargs):
+        """Select a handler function to respond to the preferred mediatypes."""
+
+        for mimetype in request.accept_mimetypes.values():
+            if mimetype in self.accept_handlers:
+                return self.accept_handlers[mimetype](*args, **kwargs)
+
+        if self.__class__.use_fallback:
+            return self.fallback(*args, **kwargs)
+
+        raise NotAcceptable
+
+    def support(self, *mimetypes):
+        """Register an additional mediatype handler on an existing Acceptor."""
+
+        def decorator(func):
+            for mimetype in mimetypes:
+                self.accept_handlers[mimetype] = func
+            return func
+        return decorator
+
+
+def accept(*args):
+    """Decorator to explictly allows multiple mediatypes
+
+    :param args: the accepted mediatypes, as strings
+    :returns: an Acceptor class to be initialized
+    """
+
+    class ExplicitAcceptor(Acceptor):
+        mimetypes = args
+
+    return ExplicitAcceptor
+
+
+def accept_fallback(func):
+    """Decorator to specify a fallback endpoint function.
+
+    :param func: the endpoint function to fall back upon
+    :returns: an initialized Acceptor
+    """
+
+    class FallbackAcceptor(Acceptor):
+        use_fallback = True
+
+    return FallbackAcceptor(func)
