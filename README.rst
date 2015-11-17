@@ -142,7 +142,7 @@ Versioning your API
 ^^^^^^^^^^^^^^^^^^^
 
 Flask-Accept let you accept any possible media type, including `custom vendored
-media types <https://en.wikipedia.org/wiki/Media_type#Vendor_tree>`__. This is
+media types <https://en.wikipedia.org/wiki/Media_type#Vendor_tree>`_. This is
 ideal for versioning an API using ``Accept`` headers only:
 
 .. code:: python
@@ -186,7 +186,7 @@ To run the tests
 Authors
 -------
 
--  `Dustin Ingram <https://github.com/di>`__
+-  `Dustin Ingram <https://github.com/di>`_
 
 License
 -------
