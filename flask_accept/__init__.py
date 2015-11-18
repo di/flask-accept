@@ -15,7 +15,7 @@ class Acceptor(object):
         """
         self.fallback = func
         self.accept_handlers = {
-            mimetype: func for mimetype in self.__class__.mimetypes
+            mimetype: func for mimetype in self.mimetypes
         }
         functools.update_wrapper(self, func)
 
@@ -26,7 +26,7 @@ class Acceptor(object):
             if mimetype in self.accept_handlers:
                 return self.accept_handlers[mimetype](*args, **kwargs)
 
-        if self.__class__.use_fallback:
+        if self.use_fallback:
             return self.fallback(*args, **kwargs)
 
         raise NotAcceptable
