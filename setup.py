@@ -56,7 +56,7 @@ setup(
     keywords='flask accept mimetype headers api versioning',
     author='Dustin Ingram',
     author_email='github@dustingram.com',
-    url='http://github.com/di/flask_accept',
+    url='http://github.com/di/flask-accept',
     license='MIT',
     long_description=readme(),
     packages=find_packages(exclude=['examples', 'tests']),

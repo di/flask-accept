@@ -1,7 +1,6 @@
 import json
 
 import pytest
-from werkzeug.datastructures import Headers
 
 from app_for_testing import app
 
