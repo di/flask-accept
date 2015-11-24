@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from app_for_testing import app
+from app_for_testing import app, index_without_fallback
 
 
 @pytest.mark.parametrize("headers,status_code,version", [
@@ -37,3 +37,6 @@ def test_without_fallback(headers, status_code, version):
         assert rv.status_code == status_code
         if rv.status_code < 300:
             assert version == json.loads(rv.data)['version']
+        else:
+            for accepted_type in index_without_fallback.accept_handlers:
+                assert accepted_type in rv.data

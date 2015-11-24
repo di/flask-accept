@@ -29,7 +29,10 @@ class Acceptor(object):
         if self.use_fallback:
             return self.fallback(*args, **kwargs)
 
-        raise NotAcceptable
+        supported_types = ', '.join(self.accept_handlers)
+        description = '{} Supported entities are: {}'.format(
+            NotAcceptable.description, supported_types)
+        raise NotAcceptable(description)
 
     def support(self, *mimetypes):
         """Register an additional mediatype handler on an existing Acceptor."""
