@@ -187,6 +187,7 @@ Authors
 -------
 
 -  `Dustin Ingram <https://github.com/di>`_
+-  `Patrick Smith <https://github.com/patricksmith>`_
 
 License
 -------
