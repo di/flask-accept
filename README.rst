@@ -1,6 +1,9 @@
 Flask-Accept
 ============
 
+.. image:: https://travis-ci.org/di/flask-accept.svg?branch=master
+    :target: https://travis-ci.org/di/flask-accept
+
 Description
 -----------
 
