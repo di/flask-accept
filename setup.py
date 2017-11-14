@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-version = '0.0.3'
+__version__ = '0.0.4'
 
 
 class PyTest(TestCommand):
@@ -32,7 +32,7 @@ def readme():
 
 setup(
     name='flask_accept',
-    version=version,
+    version=__version__,
     description="Custom Accept header routing support for Flask",
     classifiers=[
         "Development Status :: 4 - Beta",
