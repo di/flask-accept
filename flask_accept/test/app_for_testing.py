@@ -35,5 +35,5 @@ def index_without_fallback():
     'application/json',
     'application/vnd.vendor+json',
     'application/vnd.vendor.v2+json')
-def index_with_fallback_v2():
+def index_without_fallback_v2():
     return jsonify(version='v2')

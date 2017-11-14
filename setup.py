@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-import sys, os
-from setuptools import setup, find_packages, Command
+import sys
+from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 version = '0.0.3'
@@ -20,7 +20,6 @@ class PyTest(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
         import pytest
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
