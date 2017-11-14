@@ -35,5 +35,22 @@ def index_without_fallback():
     'application/json',
     'application/vnd.vendor+json',
     'application/vnd.vendor.v2+json')
-def index_with_fallback_v2():
+def index_without_fallback_v2():
     return jsonify(version='v2')
+
+
+@app.route('/with-wildcard')
+@accept('application/*')
+def index_with_wildcard():
+    return jsonify(rh='application/*')
+
+
+@index_with_wildcard.support('text/*')
+def index_with_wildcard_text():
+    return jsonify(rh='text/*')
+
+
+@app.route('/with-double-wildcard')
+@accept('*/*')
+def index_with_double_wildcard():
+    return jsonify(rh='*/*')

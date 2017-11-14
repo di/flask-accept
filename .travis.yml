@@ -1,4 +1,14 @@
 language: python
-python:
-  - "2.7"
-script: python setup.py test
+python: 3.5
+sudo: false
+matrix:
+  include:
+    - python: 2.7
+      env: TOXENV=py27
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.6
+      env: TOXENV=py36
+    - env: TOXENV=lint
+install: pip install tox
+script: tox

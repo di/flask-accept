@@ -19,7 +19,7 @@ def test_with_fallback(headers, status_code, version):
         rv = c.get('/with-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
-            assert version == json.loads(rv.data)['version']
+            assert version == json.loads(rv.data.decode())['version']
 
 
 @pytest.mark.parametrize("headers,status_code,version", [
@@ -36,7 +36,35 @@ def test_without_fallback(headers, status_code, version):
         rv = c.get('/without-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
-            assert version == json.loads(rv.data)['version']
+            assert version == json.loads(rv.data.decode())['version']
         else:
             for accepted_type in index_without_fallback.accept_handlers:
-                assert accepted_type in rv.data
+                assert accepted_type in rv.data.decode()
+
+
+@pytest.mark.parametrize("headers,status_code,rh", [
+    ('*/*', 406, None),
+    ('text/html', 200, 'text/*'),
+    ('text/*', 200, 'text/*'),
+    ('application/*', 200, 'application/*'),
+    ('application/json', 200, 'application/*'),
+])
+def test_with_wildcard(headers, status_code, rh):
+    with app.test_client() as c:
+        rv = c.get('/with-wildcard', headers={'accept': headers})
+        if rv.status_code < 300:
+            assert rh == json.loads(rv.data.decode())['rh']
+
+
+@pytest.mark.parametrize("headers,status_code,rh", [
+    ('*/*', 200, '*/*'),
+    ('text/html', 200, '*/*'),
+    ('text/*', 200, '*/*'),
+    ('application/*', 200, '*/*'),
+    ('application/json', 200, '*/*'),
+])
+def test_with_double_wildcard(headers, status_code, rh):
+    with app.test_client() as c:
+        rv = c.get('/with-double-wildcard', headers={'accept': headers})
+        if rv.status_code < 300:
+            assert rh == json.loads(rv.data.decode())['rh']

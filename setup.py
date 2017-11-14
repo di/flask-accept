@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-import sys, os
-from setuptools import setup, find_packages, Command
+import sys
+from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-version = '0.0.3'
+__version__ = '0.0.4'
 
 
 class PyTest(TestCommand):
@@ -20,7 +20,6 @@ class PyTest(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
         import pytest
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
@@ -33,7 +32,7 @@ def readme():
 
 setup(
     name='flask_accept',
-    version=version,
+    version=__version__,
     description="Custom Accept header routing support for Flask",
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -43,14 +42,10 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.0',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         "Intended Audience :: Developers",
     ],
     keywords='flask accept mimetype headers api versioning',
