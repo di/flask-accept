@@ -19,7 +19,7 @@ def test_with_fallback(headers, status_code, version):
         rv = c.get('/with-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
-            assert version == json.loads(rv.data)['version']
+            assert version == json.loads(rv.data.decode())['version']
 
 
 @pytest.mark.parametrize("headers,status_code,version", [
@@ -36,7 +36,7 @@ def test_without_fallback(headers, status_code, version):
         rv = c.get('/without-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
-            assert version == json.loads(rv.data)['version']
+            assert version == json.loads(rv.data.decode())['version']
         else:
             for accepted_type in index_without_fallback.accept_handlers:
-                assert accepted_type in rv.data
+                assert accepted_type in rv.data.decode()
