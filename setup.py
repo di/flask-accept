@@ -8,7 +8,7 @@ __version__ = '0.0.4'
 
 
 class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+    user_options = [('pytest-args=', 'a', 'Arguments to pass to py.test')]
 
     def initialize_options(self):
         TestCommand.initialize_options(self)
@@ -33,20 +33,20 @@ def readme():
 setup(
     name='flask_accept',
     version=__version__,
-    description="Custom Accept header routing support for Flask",
+    description='Custom Accept header routing support for Flask',
     classifiers=[
-        "Development Status :: 4 - Beta",
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Natural Language :: English',
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        "Intended Audience :: Developers",
+        'Intended Audience :: Developers',
     ],
     keywords='flask accept mimetype headers api versioning',
     author='Dustin Ingram',

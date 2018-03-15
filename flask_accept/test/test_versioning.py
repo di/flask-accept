@@ -5,7 +5,7 @@ import pytest
 from app_for_testing import app, index_without_fallback
 
 
-@pytest.mark.parametrize("headers,status_code,version", [
+@pytest.mark.parametrize('headers,status_code,version', [
     ('text/html', 200, 'v0'),
     ('*/*', 200, 'v0'),
     ('application/vnd.vendor.v1+json', 200, 'v1'),
@@ -22,7 +22,7 @@ def test_with_fallback(headers, status_code, version):
             assert version == json.loads(rv.data.decode())['version']
 
 
-@pytest.mark.parametrize("headers,status_code,version", [
+@pytest.mark.parametrize('headers,status_code,version', [
     ('text/html', 406, None),
     ('*/*', 406, None),
     ('application/vnd.vendor.v1+json', 200, 'v1'),
@@ -42,7 +42,7 @@ def test_without_fallback(headers, status_code, version):
                 assert accepted_type in rv.data.decode()
 
 
-@pytest.mark.parametrize("headers,status_code,rh", [
+@pytest.mark.parametrize('headers,status_code,rh', [
     ('*/*', 406, None),
     ('text/html', 200, 'text/*'),
     ('text/*', 200, 'text/*'),
@@ -56,7 +56,7 @@ def test_with_wildcard(headers, status_code, rh):
             assert rh == json.loads(rv.data.decode())['rh']
 
 
-@pytest.mark.parametrize("headers,status_code,rh", [
+@pytest.mark.parametrize('headers,status_code,rh', [
     ('*/*', 200, '*/*'),
     ('text/html', 200, '*/*'),
     ('text/*', 200, '*/*'),
@@ -70,7 +70,7 @@ def test_with_double_wildcard(headers, status_code, rh):
             assert rh == json.loads(rv.data.decode())['rh']
 
 
-@pytest.mark.parametrize("headers,status_code,version", [
+@pytest.mark.parametrize('headers,status_code,version', [
     ('text/html', 200, 'v0'),
     ('*/*', 200, 'v0'),
     ('application/vnd.vendor.v1+json', 200, 'v1'),
@@ -87,7 +87,7 @@ def test_flask_restful_resource_with_fallback(headers, status_code, version):
             assert version == json.loads(rv.data.decode())['version']
 
 
-@pytest.mark.parametrize("headers,status_code,version", [
+@pytest.mark.parametrize('headers,status_code,version', [
     ('text/html', 406, None),
     ('*/*', 406, None),
     ('application/vnd.vendor.v1+json', 200, 'v1'),
