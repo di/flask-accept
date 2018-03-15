@@ -2,6 +2,7 @@ import functools
 
 from flask import request
 from werkzeug.exceptions import NotAcceptable
+from functools import partial
 
 
 class Acceptor(object):
@@ -33,6 +34,9 @@ class Acceptor(object):
         description = '{} Supported entities are: {}'.format(
             NotAcceptable.description, supported_types)
         raise NotAcceptable(description)
+
+    def __get__(self, instance, owner):
+        return partial(self.__call__, instance)
 
     def support(self, *mimetypes):
         """Register an additional mediatype handler on an existing Acceptor."""

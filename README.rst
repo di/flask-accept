@@ -177,6 +177,47 @@ ideal for versioning an API using ``Accept`` headers only:
     $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v3"
     Goodbye cruel world.
 
+Works with Flask-RESTful Resources
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The same functionality can be applied to APIs built with Flask-RESTful
+
+.. code:: python
+
+    from flask import Flask, jsonify
+    from flask_accept import accept
+    from flask_restful import Resource, Api
+    app = Flask(__name__)
+    api = Api(app)
+
+
+    class HelloWorldResource(Resource):
+        @accept('application/vnd.your_vendor.v1', 'application/vnd.your_vendor.v2')
+        def get():
+            return 'Hello World!'
+
+        @get.support('application/vnd.your_vendor.v3')
+        def get_v2():
+            return 'Goodbye cruel world.'
+
+
+    api.add_resource(HelloWorldResource, '/')
+
+    if __name__ == '__main__':
+        app.run()
+
+.. code:: console
+
+    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v1"
+    Hello World!
+
+    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v2"
+    Hello World!
+
+    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v3"
+    Goodbye cruel world.
+
+
 Testing
 ~~~~~~~
 
