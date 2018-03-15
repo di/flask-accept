@@ -57,6 +57,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['flask'],
-    tests_require=['pytest', 'flake8', 'flask_restful'],
+    tests_require=['pytest', 'flake8', 'flask_restful', 'readme_renderer'],
     cmdclass={'test': PyTest},
 )
