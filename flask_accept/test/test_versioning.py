@@ -146,14 +146,3 @@ def test_flask_restplus_resource_without_fallback(headers,
         else:
             for accepted_type in index_without_fallback.accept_handlers:
                 assert accepted_type in rv.data.decode()
-
-
-@pytest.mark.parametrize('uri,doc', [
-    ('/plus/with-fallback', 'The doc string of GET /plus/with-fallback'),
-    ('/plus/without-fallback', 'The doc string of GET /plus/without-fallback')
-])
-def test_flask_restplus_swagger_document(uri, doc):
-    with app.test_client() as c:
-        rv = c.get('/swagger.json')
-        swagger = json.loads(rv.data.decode())
-        assert swagger['paths'][uri]['get']['summary'] == doc

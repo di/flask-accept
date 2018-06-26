@@ -100,12 +100,38 @@ api.add_resource(IndexResourceWithFallback, '/resource/with-fallback')
 
 
 # Routes set up with flask_restplus
-class PlusResourceWithoutFallback(PlusResource):
+class PlusResourceWithoutDoc(PlusResource):
+    @accept('application/vnd.vendor.v1+json')
+    def get(self):
+        return jsonify(version='v1')
+
+    @get.support(
+        'application/json',
+        'application/vnd.vendor+json',
+        'application/vnd.vendor.v2+json')
+    def get_v2(self):
+        return jsonify(version='v2')
+
+
+class PlusResourceWithDoc(PlusResource):
     @accept('application/vnd.vendor.v1+json')
     def get(self):
         """
-            The doc string of GET /plus/without-fallback
+            The doc string of GET /plus/with-doc
         """
+        return jsonify(version='v1')
+
+    @get.support(
+        'application/json',
+        'application/vnd.vendor+json',
+        'application/vnd.vendor.v2+json')
+    def get_v2(self):
+        return jsonify(version='v2')
+
+
+class PlusResourceWithoutFallback(PlusResource):
+    @accept('application/vnd.vendor.v1+json')
+    def get(self):
         return jsonify(version='v1')
 
     @get.support(
@@ -119,9 +145,6 @@ class PlusResourceWithoutFallback(PlusResource):
 class PlusResourceWithFallback(PlusResource):
     @accept_fallback
     def get(self):
-        """
-            The doc string of GET /plus/with-fallback
-        """
         return jsonify(version='v0')
 
     @get.support('application/vnd.vendor.v1+json')
@@ -138,3 +161,5 @@ class PlusResourceWithFallback(PlusResource):
 
 plus_api.add_resource(PlusResourceWithoutFallback, '/plus/without-fallback')
 plus_api.add_resource(PlusResourceWithFallback, '/plus/with-fallback')
+plus_api.add_resource(PlusResourceWithoutDoc, '/plus/without-doc')
+plus_api.add_resource(PlusResourceWithDoc, '/plus/with-doc')

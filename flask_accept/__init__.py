@@ -15,7 +15,6 @@ class Acceptor(object):
         :param func: the endpoint function to fall back upon
         """
         self.fallback = func
-        self.__func_doc_str = func.__doc__ if func.__doc__ else ""
         self.accept_handlers = {
             mimetype: func for mimetype in self.mimetypes
         }
@@ -40,7 +39,7 @@ class Acceptor(object):
         func = partial(self.__call__, instance)
 
         # flask-restplus use doc string to swagger docment
-        func.__doc__ = self.__func_doc_str
+        func.__doc__ = self.fallback.__doc__
 
         return func
 
