@@ -217,8 +217,8 @@ The same functionality can be applied to APIs built with Flask-RESTful
     $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v3"
     Goodbye cruel world.
 
-Works with Flask-RESTPlus Resources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Works with `Flask-RESTPlus <https://pypi.org/project/flask-restplus/>`_ Resources
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The same functionality can be applied to APIs built with Flask-RESTPlus
 
