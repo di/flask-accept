@@ -120,7 +120,7 @@ def test_flask_restful_resource_without_fallback(headers,
 ])
 def test_flask_restplus_resource_with_fallback(headers, status_code, version):
     with app.test_client() as c:
-        rv = c.get('/plus-resource/with-fallback', headers={'accept': headers})
+        rv = c.get('/plus/with-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
             assert version == json.loads(rv.data.decode())['version']
@@ -136,10 +136,10 @@ def test_flask_restplus_resource_with_fallback(headers, status_code, version):
     ('application/vnd.vendor.v2+json', 200, 'v2'),
 ])
 def test_flask_restplus_resource_without_fallback(headers,
-                                                 status_code,
-                                                 version):
+                                                  status_code,
+                                                  version):
     with app.test_client() as c:
-        rv = c.get('/plus-resource/without-fallback', headers={'accept': headers})
+        rv = c.get('/plus/without-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
             assert version == json.loads(rv.data.decode())['version']
@@ -149,8 +149,8 @@ def test_flask_restplus_resource_without_fallback(headers,
 
 
 @pytest.mark.parametrize('uri,doc', [
-    ('/plus-resource/with-fallback', 'The doc string of GET /plus-resource/with-fallback'),
-    ('/plus-resource/without-fallback', 'The doc string of GET /plus-resource/without-fallback'),
+    ('/plus/with-fallback', 'The doc string of GET /plus/with-fallback'),
+    ('/plus/without-fallback', 'The doc string of GET /plus/without-fallback')
 ])
 def test_flask_restplus_swagger_document(uri, doc):
     with app.test_client() as c:
