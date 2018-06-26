@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
+from flask_restplus import Resource as PlusResource
+from flask_restplus import Api as PlusApi
 
 from flask_accept import accept, accept_fallback
 
@@ -7,6 +9,9 @@ app = Flask(__name__)
 app.debug = True
 # flask_restful api
 api = Api(app)
+
+# flask_restplus api
+plus_api = PlusApi(app)
 
 
 @app.route('/with-fallback')
@@ -92,3 +97,44 @@ class IndexResourceWithFallback(Resource):
 
 api.add_resource(IndexResourceWithoutFallback, '/resource/without-fallback')
 api.add_resource(IndexResourceWithFallback, '/resource/with-fallback')
+
+# Routes set up with flask_restplus
+class PlusIndexResourceWithoutFallback(PlusResource):
+    @accept('application/vnd.vendor.v1+json')
+    def get(self):
+        """
+            The doc string of GET /plus-resource/without-fallback
+        """
+        return jsonify(version='v1')
+
+    @get.support(
+        'application/json',
+        'application/vnd.vendor+json',
+        'application/vnd.vendor.v2+json')
+    def get_v2(self):
+        return jsonify(version='v2')
+
+
+class PlusIndexResourceWithFallback(PlusResource):
+    @accept_fallback
+    def get(self):
+        """
+            The doc string of GET /plus-resource/with-fallback
+        """
+        return jsonify(version='v0')
+
+    @get.support('application/vnd.vendor.v1+json')
+    def get_v1(self):
+        return jsonify(version='v1')
+
+    @get.support(
+        'application/json',
+        'application/vnd.vendor+json',
+        'application/vnd.vendor.v2+json')
+    def get_v2(self):
+        return jsonify(version='v2')
+
+
+plus_api.add_resource(PlusIndexResourceWithoutFallback, '/plus-resource/without-fallback')
+plus_api.add_resource(PlusIndexResourceWithFallback, '/plus-resource/with-fallback')
+

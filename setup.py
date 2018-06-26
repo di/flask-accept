@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 
 
 class PyTest(TestCommand):
@@ -57,6 +57,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['flask'],
-    tests_require=['pytest', 'flake8', 'flask_restful', 'readme_renderer'],
+    tests_require=['pytest', 'flake8', 'flask_restful', 'readme_renderer', 'flask_restplus'],
     cmdclass={'test': PyTest},
 )

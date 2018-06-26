@@ -15,6 +15,7 @@ class Acceptor(object):
         :param func: the endpoint function to fall back upon
         """
         self.fallback = func
+        self.__func_doc_str = func.__doc__ if func.__doc__ else ""
         self.accept_handlers = {
             mimetype: func for mimetype in self.mimetypes
         }
@@ -36,7 +37,12 @@ class Acceptor(object):
         raise NotAcceptable(description)
 
     def __get__(self, instance, owner):
-        return partial(self.__call__, instance)
+        func = partial(self.__call__, instance)
+
+        # flask-restplus use doc string to swagger docment
+        func.__doc__ = self.__func_doc_str
+
+        return func
 
     def support(self, *mimetypes):
         """Register an additional mediatype handler on an existing Acceptor."""
