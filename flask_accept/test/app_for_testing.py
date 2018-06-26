@@ -100,7 +100,7 @@ api.add_resource(IndexResourceWithFallback, '/resource/with-fallback')
 
 
 # Routes set up with flask_restplus
-class PlusIndexResourceWithoutFallback(PlusResource):
+class PlusResourceWithoutFallback(PlusResource):
     @accept('application/vnd.vendor.v1+json')
     def get(self):
         """
@@ -116,7 +116,7 @@ class PlusIndexResourceWithoutFallback(PlusResource):
         return jsonify(version='v2')
 
 
-class PlusIndexResourceWithFallback(PlusResource):
+class PlusResourceWithFallback(PlusResource):
     @accept_fallback
     def get(self):
         """
@@ -136,5 +136,5 @@ class PlusIndexResourceWithFallback(PlusResource):
         return jsonify(version='v2')
 
 
-plus_api.add_resource(PlusIndexResourceWithoutFallback, '/plus/without-fallback')
-plus_api.add_resource(PlusIndexResourceWithFallback, '/plus/with-fallback')
+plus_api.add_resource(PlusResourceWithoutFallback, '/plus/without-fallback')
+plus_api.add_resource(PlusResourceWithFallback, '/plus/with-fallback')
