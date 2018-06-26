@@ -218,9 +218,9 @@ The same functionality can be applied to APIs built with Flask-RESTful
     Goodbye cruel world.
 
 Works with Flask-RESTPlus Resources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The same functionality can be applied to APIs built with Flask-RESTful
+The same functionality can be applied to APIs built with Flask-RESTPlus
 
 .. code:: python
 
