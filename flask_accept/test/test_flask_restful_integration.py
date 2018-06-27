@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from flask_restplus_app_for_testing import app
+from flask_restful_app_for_testing import app
 
 
 @pytest.mark.parametrize('headers,status_code,version', [
@@ -14,9 +14,9 @@ from flask_restplus_app_for_testing import app
     ('application/vnd.vendor+json', 200, 'v2'),
     ('application/vnd.vendor.v2+json', 200, 'v2'),
 ])
-def test_flask_restplus_resource_with_fallback(headers, status_code, version):
+def test_flask_restful_resource_with_fallback(headers, status_code, version):
     with app.test_client() as c:
-        rv = c.get('/plus/with-fallback', headers={'accept': headers})
+        rv = c.get('/resource/with-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
             assert version == json.loads(rv.data.decode())['version']
@@ -31,11 +31,11 @@ def test_flask_restplus_resource_with_fallback(headers, status_code, version):
     ('application/vnd.vendor+json', 200, 'v2'),
     ('application/vnd.vendor.v2+json', 200, 'v2'),
 ])
-def test_flask_restplus_resource_without_fallback(headers,
-                                                  status_code,
-                                                  version):
+def test_flask_restful_resource_without_fallback(headers,
+                                                 status_code,
+                                                 version):
     with app.test_client() as c:
-        rv = c.get('/plus/without-fallback', headers={'accept': headers})
+        rv = c.get('/resource/without-fallback', headers={'accept': headers})
         assert rv.status_code == status_code
         if rv.status_code < 300:
             assert version == json.loads(rv.data.decode())['version']
@@ -45,14 +45,3 @@ def test_flask_restplus_resource_without_fallback(headers,
                                   'application/vnd.vendor+json',
                                   'application/vnd.vendor.v2+json'):
                 assert accepted_type in rv.data.decode()
-
-
-@pytest.mark.parametrize('uri,doc', [
-    ('/plus/with-doc', 'The doc string of GET /plus/with-doc'),
-    ('/plus/without-doc', None)
-])
-def test_flask_restplus_swagger_document(uri, doc):
-    with app.test_client() as c:
-        rv = c.get('/swagger.json')
-        swagger = json.loads(rv.data.decode())
-        assert swagger['paths'][uri]['get'].get('summary') == doc
