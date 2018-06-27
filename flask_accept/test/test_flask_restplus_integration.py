@@ -47,12 +47,17 @@ def test_flask_restplus_resource_without_fallback(headers,
                 assert accepted_type in rv.data.decode()
 
 
-@pytest.mark.parametrize('uri,doc', [
-    ('/plus/with-doc', 'The doc string of GET /plus/with-doc'),
-    ('/plus/without-doc', None)
+@pytest.mark.parametrize('uri,doc,apidoc', [
+    ('/plus/with-doc',
+     'The doc string of GET /plus/with-doc',
+     [{'description': 'The doc of field',
+       'in': 'query', 'name': 'field',
+       'type': 'string'}]),
+    ('/plus/without-doc', None, None)
 ])
-def test_flask_restplus_swagger_document(uri, doc):
+def test_flask_restplus_swagger_document(uri, doc, apidoc):
     with app.test_client() as c:
         rv = c.get('/swagger.json')
         swagger = json.loads(rv.data.decode())
         assert swagger['paths'][uri]['get'].get('summary') == doc
+        assert swagger['paths'][uri]['get'].get('parameters') == apidoc

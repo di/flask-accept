@@ -24,6 +24,7 @@ class PlusResourceWithoutDoc(Resource):
 
 class PlusResourceWithDoc(Resource):
     @accept('application/vnd.vendor.v1+json')
+    @api.doc(params=dict(field='The doc of field'))
     def get(self):
         """
             The doc string of GET /plus/with-doc
