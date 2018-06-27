@@ -40,10 +40,10 @@ def test_flask_restplus_resource_without_fallback(headers,
         if rv.status_code < 300:
             assert version == json.loads(rv.data.decode())['version']
         else:
-            for accepted_type in ('application/json',
-                                  'application/vnd.vendor.v1+json',
-                                  'application/vnd.vendor+json',
-                                  'application/vnd.vendor.v2+json'):
+            for accepted_type in ('json',
+                                  'vnd.vendor.v1+json',
+                                  'vnd.vendor+json',
+                                  'vnd.vendor.v2+json'):
                 assert accepted_type in rv.data.decode()
 
 

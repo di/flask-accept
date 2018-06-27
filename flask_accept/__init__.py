@@ -39,9 +39,9 @@ class Acceptor(object):
         func = partial(self.__call__, instance)
 
         # flask-restplus use doc and apidoc for swagger document
-        functools.update_wrapper(func,
-                                 self.fallback,
-                                 assigned=('__doc__', '__apidoc__'))
+        func.__doc__ = self.fallback.__doc__
+        if '__apidoc__' in self.fallback.__dict__:
+            func.__apidoc__ = self.fallback.__apidoc__
 
         return func
 
