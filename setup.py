@@ -62,7 +62,6 @@ setup(
         'flake8',
         'flask_restful',
         'readme_renderer',
-        'flask_restplus'
     ],
     cmdclass={'test': PyTest},
 )
