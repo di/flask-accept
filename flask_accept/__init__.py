@@ -43,7 +43,10 @@ class Acceptor(object):
         if '__apidoc__' in self.fallback.__dict__:
             func.__apidoc__ = self.fallback.__apidoc__
 
-        functools.update_wrapper(func, self.fallback)
+        # flasgger uses globals and name
+        func.__globals__ = self.fallback.__globals__
+        func.__name__ = self.fallback.__name__
+
         return func
 
     def support(self, *mimetypes):
