@@ -15,9 +15,7 @@ class Acceptor(object):
         :param func: the endpoint function to fall back upon
         """
         self.fallback = func
-        self.accept_handlers = {
-            mimetype: func for mimetype in self.mimetypes
-        }
+        self.accept_handlers = {mimetype: func for mimetype in self.mimetypes}
         functools.update_wrapper(self, func)
 
     def __call__(self, *args, **kwargs):
@@ -30,18 +28,14 @@ class Acceptor(object):
         if self.use_fallback:
             return self.fallback(*args, **kwargs)
 
-        supported_types = ', '.join(self.accept_handlers)
-        description = '{} Supported entities are: {}'.format(
-            NotAcceptable.description, supported_types)
+        supported_types = ", ".join(self.accept_handlers)
+        description = "{} Supported entities are: {}".format(
+            NotAcceptable.description, supported_types
+        )
         raise NotAcceptable(description)
 
     def __get__(self, instance, owner):
         func = partial(self.__call__, instance)
-
-        # flask-restplus use doc and apidoc for swagger document
-        func.__doc__ = self.fallback.__doc__
-        if '__apidoc__' in self.fallback.__dict__:
-            func.__apidoc__ = self.fallback.__apidoc__
 
         return func
 
@@ -52,6 +46,7 @@ class Acceptor(object):
             for mimetype in mimetypes:
                 self.accept_handlers[mimetype] = func
             return func
+
         return decorator
 
 
