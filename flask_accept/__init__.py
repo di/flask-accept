@@ -43,6 +43,7 @@ class Acceptor(object):
         if '__apidoc__' in self.fallback.__dict__:
             func.__apidoc__ = self.fallback.__apidoc__
 
+        functools.update_wrapper(func, self.fallback)
         return func
 
     def support(self, *mimetypes):
