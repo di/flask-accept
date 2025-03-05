@@ -37,6 +37,10 @@ class Acceptor(object):
     def __get__(self, instance, owner):
         func = partial(self.__call__, instance)
 
+        # flasgger uses globals and name
+        func.__globals__ = self.fallback.__globals__
+        func.__name__ = self.fallback.__name__
+
         return func
 
     def support(self, *mimetypes):
