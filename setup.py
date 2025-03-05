@@ -1,28 +1,8 @@
 # encoding: utf-8
 
-import sys
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 
-__version__ = '0.0.6'
-
-
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', 'Arguments to pass to py.test')]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = ['-x', 'flask_accept/test']
-
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-
-    def run_tests(self):
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
+__version__ = "0.0.6"
 
 
 def readme():
@@ -56,12 +36,5 @@ setup(
     packages=find_packages(exclude=['examples', 'tests']),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['flask'],
-    tests_require=[
-        'pytest',
-        'flake8',
-        'flask_restful',
-        'readme_renderer',
-    ],
-    cmdclass={'test': PyTest},
+    install_requires=["flask"],
 )
