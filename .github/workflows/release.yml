@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    name: Build & release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: deps
+        run: python -m pip install -U build
+      - name: publish
+        uses: pypa/gh-action-pypi-publish@release/v1

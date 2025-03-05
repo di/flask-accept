@@ -1,9 +1,6 @@
 Flask-Accept
 ============
 
-.. image:: https://travis-ci.org/di/flask-accept.svg?branch=master
-    :target: https://travis-ci.org/di/flask-accept
-
 Description
 -----------
 
@@ -216,50 +213,6 @@ The same functionality can be applied to APIs built with Flask-RESTful
 
     $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v3"
     Goodbye cruel world.
-
-Works with Flask-RESTPlus Resources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The same functionality can be applied to APIs built with `Flask-RESTPlus <https://pypi.org/project/flask-restplus/>`_
-
-.. code:: python
-
-    from flask import Flask, jsonify
-    from flask_accept import accept
-    from flask_restplus import Resource, Api
-    app = Flask(__name__)
-    api = Api(app)
-
-
-    class HelloWorldResource(Resource):
-        @accept('application/vnd.your_vendor.v1', 'application/vnd.your_vendor.v2')
-        def get():
-        """
-            The doc string showing in swagger
-        """
-            return 'Hello World!'
-
-        @get.support('application/vnd.your_vendor.v3')
-        def get_v2():
-            return 'Goodbye cruel world.'
-
-
-    api.add_resource(HelloWorldResource, '/')
-
-    if __name__ == '__main__':
-        app.run()
-
-.. code:: console
-
-    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v1"
-    Hello World!
-
-    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v2"
-    Hello World!
-
-    $ curl localhost:5000 -H "Accept: application/vnd.your_vendor.v3"
-    Goodbye cruel world.
-
 
 Testing
 ~~~~~~~
