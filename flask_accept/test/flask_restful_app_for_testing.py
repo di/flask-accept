@@ -9,34 +9,36 @@ api = Api(app)
 
 
 class IndexResourceWithoutFallback(Resource):
-    @accept('application/vnd.vendor.v1+json')
+    @accept("application/vnd.vendor.v1+json")
     def get(self):
-        return jsonify(version='v1')
+        return jsonify(version="v1")
 
     @get.support(
-        'application/json',
-        'application/vnd.vendor+json',
-        'application/vnd.vendor.v2+json')
+        "application/json",
+        "application/vnd.vendor+json",
+        "application/vnd.vendor.v2+json",
+    )
     def get_v2(self):
-        return jsonify(version='v2')
+        return jsonify(version="v2")
 
 
 class IndexResourceWithFallback(Resource):
     @accept_fallback
     def get(self):
-        return jsonify(version='v0')
+        return jsonify(version="v0")
 
-    @get.support('application/vnd.vendor.v1+json')
+    @get.support("application/vnd.vendor.v1+json")
     def get_v1(self):
-        return jsonify(version='v1')
+        return jsonify(version="v1")
 
     @get.support(
-        'application/json',
-        'application/vnd.vendor+json',
-        'application/vnd.vendor.v2+json')
+        "application/json",
+        "application/vnd.vendor+json",
+        "application/vnd.vendor.v2+json",
+    )
     def get_v2(self):
-        return jsonify(version='v2')
+        return jsonify(version="v2")
 
 
-api.add_resource(IndexResourceWithoutFallback, '/resource/without-fallback')
-api.add_resource(IndexResourceWithFallback, '/resource/with-fallback')
+api.add_resource(IndexResourceWithoutFallback, "/resource/without-fallback")
+api.add_resource(IndexResourceWithFallback, "/resource/with-fallback")
